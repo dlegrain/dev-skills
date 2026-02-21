@@ -116,7 +116,7 @@ Lis /PATTERNS/recipes/document-ingestion.md puis implémente l'ingestion de docu
 |-----------|----------|
 | **API Wrappers** | Supabase, Gemini, Embeddings, Langfuse, Logger, Google Sheets |
 | **Components** | Chat Interface, Quiz Player, Voice Agent |
-| **Recipes** | API Route, Middleware Auth, Document Ingestion, Tailwind Design System, .cursorrules, Docker + Railway |
+| **Recipes** | API Route, Middleware Auth, Document Ingestion, Tailwind Design System, .cursorrules, Docker + Railway, Script `go` |
 | **Troubleshooting** | Erreurs courantes et solutions |
 
 > Voir [PATTERNS/README.md](PATTERNS/README.md) pour l'index complet avec liens.
@@ -153,4 +153,5 @@ npm run build       # Build production
 npm run start       # Serveur production
 npm run lint        # ESLint
 npm run setup-db    # Initialisation base de données
+./go                # Lancement rapide (prod, ouvre le navigateur)
 ```

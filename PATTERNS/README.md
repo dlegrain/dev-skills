@@ -42,6 +42,7 @@ Bibliothèque de patterns réutilisables extraits de 28+ projets Next.js.
 | Tailwind Design System | [recipes/tailwind-design-system.md](recipes/tailwind-design-system.md) | ressourcerie-menuiserie |
 | .cursorrules (conventions Cursor IDE) | [recipes/cursorrules.md](recipes/cursorrules.md) | starter_pack |
 | Docker + Railway Deploy | [recipes/docker-railway.md](recipes/docker-railway.md) | ressourcerie-menuiserie |
+| Script `go` (lancement rapide) | [recipes/go-script.md](recipes/go-script.md) | tous projets |
 
 ### Troubleshooting
 
@@ -51,9 +52,9 @@ Bibliothèque de patterns réutilisables extraits de 28+ projets Next.js.
 
 ## Stats
 
-- **15 patterns** documentés
+- **16 patterns** documentés
 - **28+ projets** scannés
-- **6 API wrappers** + **3 components** + **6 recipes**
+- **6 API wrappers** + **3 components** + **7 recipes**
 - Code réel extrait, copier-coller ready
 
 ## Stack technique
