@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Dev Skills — Master tech concepts",
   description:
     "Training tool to master web development concepts: JavaScript, Python, React, Next.js, Docker, SQL and more.",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({
