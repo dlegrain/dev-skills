@@ -32,10 +32,10 @@ export function AppHeader() {
           {/* Language toggle */}
           <button
             onClick={() => setLang(lang === "fr" ? "en" : "fr")}
-            className="ml-2 px-3 py-1.5 rounded-lg text-xs font-semibold border border-gray-200 text-gray-500 hover:border-indigo-300 hover:text-indigo-600 transition-colors"
+            className="ml-3 px-4 py-1.5 rounded-lg text-sm font-bold bg-indigo-500 text-white hover:bg-indigo-600 transition-colors shadow-sm"
             title={lang === "fr" ? "Switch to English" : "Switch to French"}
           >
-            {lang === "fr" ? "EN" : "FR"}
+            {lang === "fr" ? "🇬🇧 EN" : "🇫🇷 FR"}
           </button>
         </nav>
       </div>
