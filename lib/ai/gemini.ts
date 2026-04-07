@@ -22,7 +22,7 @@ function getGenAI(): GoogleGenerativeAI {
  */
 export async function generateText(
   prompt: string,
-  model: string = "gemini-2.0-flash"
+  model: string = "gemini-2.5-flash"
 ): Promise<string> {
   const ai = getGenAI();
   const geminiModel = ai.getGenerativeModel({ model });
@@ -43,7 +43,7 @@ export async function generateText(
 export async function generateChatResponse(
   messages: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }>,
   systemInstruction?: string,
-  model: string = "gemini-2.0-flash"
+  model: string = "gemini-2.5-flash"
 ): Promise<string> {
   const ai = getGenAI();
   const geminiModel = ai.getGenerativeModel({

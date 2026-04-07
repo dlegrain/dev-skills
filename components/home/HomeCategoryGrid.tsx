@@ -6,6 +6,7 @@ import { getCategoryStats, getGlobalStats } from "@/lib/progress";
 import { getCategoryConceptIds } from "@/lib/data-helpers";
 import { ProgressBar } from "@/components/learning/ProgressBar";
 import { useEffect, useState } from "react";
+import { useLang } from "@/lib/LangContext";
 
 interface HomeCategoryGridProps {
   categories: Category[];
@@ -13,6 +14,7 @@ interface HomeCategoryGridProps {
 
 export function HomeCategoryGrid({ categories }: HomeCategoryGridProps) {
   const [mounted, setMounted] = useState(false);
+  const { t } = useLang();
 
   useEffect(() => {
     setMounted(true);
@@ -26,24 +28,24 @@ export function HomeCategoryGrid({ categories }: HomeCategoryGridProps) {
 
   return (
     <div>
-      {/* Progression globale */}
+      {/* Global progress */}
       <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-8 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-semibold text-gray-900">Progression globale</h2>
+          <h2 className="font-semibold text-gray-900">{t("home.global-progress")}</h2>
           <span className="text-sm text-gray-500">
-            {mounted ? globalStats.mastered : 0} / {TOTAL_CONCEPTS} concepts maîtrisés
+            {mounted ? globalStats.mastered : 0} / {TOTAL_CONCEPTS} {t("home.mastered-of")}
           </span>
         </div>
         <ProgressBar value={globalPercent} showPercent color="indigo" />
         {mounted && globalStats.learning > 0 && (
           <p className="text-xs text-amber-600 mt-2">
-            ◑ {globalStats.learning} concept{globalStats.learning > 1 ? "s" : ""} en apprentissage
+            ◑ {globalStats.learning} concept{globalStats.learning > 1 ? "s" : ""} {t("home.in-progress")}
           </p>
         )}
       </div>
 
-      {/* Grille des catégories */}
-      <h2 className="font-semibold text-gray-900 mb-4 text-lg">13 catégories</h2>
+      {/* Category grid */}
+      <h2 className="font-semibold text-gray-900 mb-4 text-lg">13 {t("home.categories")}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {categories.map((category) => {
           const conceptIds = getCategoryConceptIds(category.slug);

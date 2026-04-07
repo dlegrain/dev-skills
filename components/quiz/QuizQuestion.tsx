@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { QuizQuestion as QuizQuestionType } from "@/types/learning";
+import { useLang } from "@/lib/LangContext";
 import { cn } from "@/lib/utils";
 
 interface QuizQuestionProps {
@@ -18,6 +19,7 @@ export function QuizQuestion({
   onAnswer,
 }: QuizQuestionProps) {
   const [selected, setSelected] = useState<number | null>(null);
+  const { t } = useLang();
   const answered = selected !== null;
 
   function handleSelect(index: number) {
@@ -44,10 +46,10 @@ export function QuizQuestion({
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* Progression */}
+      {/* Progress */}
       <div className="flex items-center gap-2 mb-6">
         <span className="text-sm text-gray-500">
-          Question {questionNumber} / {totalQuestions}
+          {t("quiz.question-of")} {questionNumber} / {totalQuestions}
         </span>
         <div className="flex-1 bg-gray-100 rounded-full h-1.5 overflow-hidden">
           <div
@@ -64,7 +66,7 @@ export function QuizQuestion({
         </p>
       </div>
 
-      {/* Réponses */}
+      {/* Answers */}
       <div className="grid gap-3">
         {question.answers.map((answer, index) => (
           <button
@@ -83,7 +85,7 @@ export function QuizQuestion({
         ))}
       </div>
 
-      {/* Explication */}
+      {/* Explanation */}
       {answered && (
         <div
           className={cn(
@@ -94,7 +96,7 @@ export function QuizQuestion({
           )}
         >
           <span className="font-semibold">
-            {selected === question.correctIndex ? "✓ Correct ! " : "✗ Pas tout à fait. "}
+            {selected === question.correctIndex ? t("quiz.correct") : t("quiz.incorrect")}
           </span>
           {question.explanation}
         </div>

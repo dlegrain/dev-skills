@@ -1,0 +1,15 @@
+export const CATEGORIES_EN: Record<string, { name: string; description: string }> = {
+  "cat-01": { name: "Languages",               description: "JS, TS, Python, HTML, CSS, SQL, Markdown" },
+  "cat-02": { name: "File formats",             description: "JSON, TOML, YAML, .env, .gitignore" },
+  "cat-03": { name: "Frameworks & libraries",   description: "React, Next.js, Vite, Flask, FastAPI, Express, Tailwind" },
+  "cat-04": { name: "Build & compilation",      description: "Build, transpilation, bundler, dev vs prod" },
+  "cat-05": { name: "Servers & networking",     description: "Server, port, localhost, HTTP/HTTPS, REST API" },
+  "cat-06": { name: "Frontend / Backend / Full-stack", description: "Architecture of modern web applications" },
+  "cat-07": { name: "Web rendering",            description: "SSR, SSG, CSR — how pages are generated" },
+  "cat-08": { name: "Packages & dependencies",  description: "npm, pnpm, pip, node_modules, package.json, venv" },
+  "cat-09": { name: "Project structure",        description: "src/, app/, components/, public/" },
+  "cat-10": { name: "Dev tools",                description: "Git, GitHub, CLI, Terminal, VSCode, Docker, ESLint" },
+  "cat-11": { name: "Programming concepts",     description: "Variable, function, object, loop, async/await, middleware" },
+  "cat-12": { name: "Databases",                description: "SQL, PostgreSQL, Supabase, ORM" },
+  "cat-13": { name: "Artificial intelligence",  description: "LLM, token, prompt, LLM API, RAG" },
+};

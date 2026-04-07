@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Concept, MasteryLevel } from "@/types/learning";
 import { MasteryBadge } from "@/components/learning/MasteryBadge";
 import { getProgress, setConceptMastery } from "@/lib/progress";
+import { useLang } from "@/lib/LangContext";
+import { translateConcept } from "@/lib/data-helpers";
 import { cn } from "@/lib/utils";
 
 interface ConceptDetailProps {
@@ -14,6 +16,8 @@ interface ConceptDetailProps {
 
 export function ConceptDetail({ concept, related }: ConceptDetailProps) {
   const [mastery, setMastery] = useState<MasteryLevel>("unknown");
+  const { t, lang } = useLang();
+  const c = translateConcept(concept, lang);
 
   useEffect(() => {
     const progress = getProgress();
@@ -27,15 +31,15 @@ export function ConceptDetail({ concept, related }: ConceptDetailProps) {
 
   return (
     <div className="animate-fade-in-up">
-      {/* En-tête */}
+      {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">{concept.name}</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{c.name}</h1>
         <MasteryBadge mastery={mastery} />
       </div>
 
-      {/* Boutons de niveau */}
+      {/* Mastery buttons */}
       <div className="flex gap-2 mb-8 flex-wrap">
-        <span className="text-sm text-gray-500 self-center">Mon niveau :</span>
+        <span className="text-sm text-gray-500 self-center">{t("mastery.my-level")}</span>
         {(["unknown", "learning", "mastered"] as MasteryLevel[]).map((level) => (
           <button
             key={level}
@@ -51,35 +55,35 @@ export function ConceptDetail({ concept, related }: ConceptDetailProps) {
                 : "bg-white border-gray-200 text-gray-500 hover:border-gray-300"
             )}
           >
-            {level === "unknown" ? "○ Inconnu" : level === "learning" ? "◑ En apprentissage" : "● Maîtrisé"}
+            {level === "unknown" ? `○ ${t("mastery.unknown")}` : level === "learning" ? `◑ ${t("mastery.learning")}` : `● ${t("mastery.mastered")}`}
           </button>
         ))}
       </div>
 
-      {/* Définition courte */}
+      {/* Short def */}
       <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-6">
-        <p className="text-indigo-900 font-medium">{concept.shortDef}</p>
+        <p className="text-indigo-900 font-medium">{c.shortDef}</p>
       </div>
 
-      {/* Définition longue */}
+      {/* Long def */}
       <section className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">Explication complète</h2>
-        <p className="text-gray-700 leading-relaxed">{concept.longDef}</p>
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">{t("concept.full-explanation")}</h2>
+        <p className="text-gray-700 leading-relaxed">{c.longDef}</p>
       </section>
 
-      {/* Analogie */}
+      {/* Analogy */}
       <section className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">Analogie</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">{t("concept.analogy")}</h2>
         <div className="bg-amber-50 border border-amber-100 rounded-xl p-4">
-          <p className="text-amber-900 italic">&ldquo;{concept.analogy}&rdquo;</p>
+          <p className="text-amber-900 italic">&ldquo;{c.analogy}&rdquo;</p>
         </div>
       </section>
 
-      {/* Exemples */}
+      {/* Examples */}
       <section className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">Exemples concrets</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">{t("concept.examples")}</h2>
         <ul className="space-y-2">
-          {concept.examples.map((ex, i) => (
+          {c.examples.map((ex, i) => (
             <li key={i} className="flex items-start gap-3">
               <span className="text-indigo-400 font-bold shrink-0 mt-0.5">→</span>
               <code className="text-sm bg-gray-100 rounded-lg px-3 py-1.5 text-gray-800 flex-1 leading-relaxed font-mono">
@@ -91,33 +95,33 @@ export function ConceptDetail({ concept, related }: ConceptDetailProps) {
       </section>
 
       {/* Tags */}
-      {concept.tags.length > 0 && (
+      {c.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
-          {concept.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full"
-            >
+          {c.tags.map((tag) => (
+            <span key={tag} className="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">
               #{tag}
             </span>
           ))}
         </div>
       )}
 
-      {/* Concepts liés */}
+      {/* Related concepts */}
       {related.length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Concepts liés</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">{t("concept.related")}</h2>
           <div className="flex flex-wrap gap-2">
-            {related.map((r) => (
-              <Link
-                key={r.slug}
-                href={`/concepts/${r.slug}`}
-                className="px-3 py-1.5 bg-white border border-gray-200 text-sm text-gray-700 rounded-xl hover:border-indigo-300 hover:text-indigo-600 transition-colors"
-              >
-                {r.name}
-              </Link>
-            ))}
+            {related.map((r) => {
+              const rc = translateConcept(r, lang);
+              return (
+                <Link
+                  key={r.slug}
+                  href={`/concepts/${r.slug}`}
+                  className="px-3 py-1.5 bg-white border border-gray-200 text-sm text-gray-700 rounded-xl hover:border-indigo-300 hover:text-indigo-600 transition-colors"
+                >
+                  {rc.name}
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}

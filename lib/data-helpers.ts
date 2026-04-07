@@ -1,7 +1,32 @@
 import { CONCEPTS } from "@/data/concepts";
 import { CATEGORIES } from "@/data/categories";
 import { QUIZ_QUESTIONS } from "@/data/questions";
+import { CONCEPTS_EN } from "@/data/concepts.en";
+import { CATEGORIES_EN } from "@/data/categories.en";
+import { QUESTIONS_EN } from "@/data/questions.en";
 import { Concept, Category, QuizQuestion } from "@/types/learning";
+import type { Lang } from "@/lib/i18n";
+
+export function translateConcept(concept: Concept, lang: Lang): Concept {
+  if (lang === "fr") return concept;
+  const en = CONCEPTS_EN[concept.id];
+  if (!en) return concept;
+  return { ...concept, shortDef: en.shortDef, longDef: en.longDef, analogy: en.analogy };
+}
+
+export function translateCategory(category: Category, lang: Lang): Category {
+  if (lang === "fr") return category;
+  const en = CATEGORIES_EN[category.id];
+  if (!en) return category;
+  return { ...category, name: en.name, description: en.description };
+}
+
+export function translateQuestion(question: QuizQuestion, lang: Lang): QuizQuestion {
+  if (lang === "fr") return question;
+  const en = QUESTIONS_EN[question.id];
+  if (!en) return question;
+  return { ...question, question: en.question, answers: en.answers, explanation: en.explanation };
+}
 
 export function getConceptBySlug(slug: string): Concept | undefined {
   return CONCEPTS.find((c) => c.slug === slug);

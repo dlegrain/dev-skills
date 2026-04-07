@@ -10,33 +10,43 @@ export async function POST(request: Request) {
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json(
-        { error: "Messages requis" },
+        { error: "Messages required" },
         { status: 400 }
       );
     }
 
     // Convertir le format frontend vers le format Gemini
-    const geminiMessages = messages.map(
+    // Gemini requires history to start with "user" — strip leading assistant/model messages
+    const filtered = [...messages];
+    while (filtered.length > 0 && filtered[0].role === "assistant") {
+      filtered.shift();
+    }
+
+    const geminiMessages = filtered.map(
       (msg: { role: string; content: string }) => ({
         role: (msg.role === "assistant" ? "model" : "user") as "user" | "model",
         parts: [{ text: msg.content }],
       })
     );
 
-    log.info({ messageCount: messages.length }, "Requête chat reçue");
+    if (geminiMessages.length === 0) {
+      return NextResponse.json({ error: "Messages required" }, { status: 400 });
+    }
+
+    log.info({ messageCount: messages.length }, "Chat request received");
 
     const response = await generateChatResponse(
       geminiMessages,
       systemPrompt
     );
 
-    log.info({ responseLength: response.length }, "Réponse chat envoyée");
+    log.info({ responseLength: response.length }, "Chat response sent");
 
     return NextResponse.json({ response });
   } catch (error) {
-    log.error({ error }, "Erreur dans /api/chat");
+    log.error({ error }, "Error in /api/chat");
     return NextResponse.json(
-      { error: "Erreur interne du serveur" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
